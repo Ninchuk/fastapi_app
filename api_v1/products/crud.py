@@ -21,3 +21,17 @@ async def get_products(db_session: AsyncSession) -> list[Product]:
 
 async def get_product(product_id: int, db_session: AsyncSession) -> Product | None:
     return await db_session.get(Product, product_id)
+
+
+async def update_product():
+    pass
+
+
+async def update_product_partial():
+    pass
+
+
+async def delete_product(product_id: int, db_session: AsyncSession):
+    query = select(Product).where(Product.id == product_id)
+    product = (await db_session.execute(query)).scalars().first()
+    await db_session.delete(product)
