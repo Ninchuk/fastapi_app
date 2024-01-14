@@ -1,0 +1,49 @@
+version: "3.7"
+services:
+  db:
+    container_name: postgres_db
+    restart: always
+    image: postgres:16.1
+    shm_size: 1g
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg-isredy", "U", "postgres", "-d", "postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_USER: "$DB_USER"
+      POSTGRES_PASSWORD: "$DB_PASS"
+      POSTGRES_DB: "$DB_NAME"
+
+  redis:
+    container_name: redis_app
+    image: redis:7.2.4
+    volumes:
+      - ./redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "raw", "incr", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  fastapi_app:
+    container_name: fastapi_app
+    image: fastapi_app:latest
+    build:
+      dockerfile: ./Dockerfile
+      context: .
+    command: ./scripts/startup.sh -m
+    ports:
+      - "8000:8000"
+    restart: always
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - redis

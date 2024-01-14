@@ -1,0 +1,17 @@
+deploy/*quark*
+deploy/pgdata
+deploy/electrum
+deploy/tmp
+cleanup_backups
+backup_trash
+static
+staticfiles
+logs
+venv
+env
+.pytest_cache
+bitcoind_data
+postgresql_data
+rabbitmq_data
+rabbitmq_logs
+redis_data
