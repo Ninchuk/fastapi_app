@@ -1,5 +1,4 @@
 from pydantic import BaseModel, EmailStr
-from sqlmodel import SQLModel
 
 from users.schemas.response import Response
 

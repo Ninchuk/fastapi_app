@@ -20,6 +20,8 @@ class Settings(BaseSettings):
 
     BACKEND_CORS_ORIGINS: List = []
 
+    api_v1_prefix: str = "/api/v1"
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @field_validator("BACKEND_CORS_ORIGINS")

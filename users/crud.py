@@ -1,6 +1,3 @@
-from typing import Annotated
-
-from fastapi import Depends
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
