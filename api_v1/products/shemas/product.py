@@ -1,7 +1,5 @@
 from pydantic import BaseModel
 
-from users.schemas.response import Response
-
 
 class CreateProduct(BaseModel):
     name: str
