@@ -1,3 +1,5 @@
+from sqlalchemy import Column
+from sqlalchemy.dialects.mysql import TEXT
 from sqlmodel import Field, SQLModel
 
 
@@ -6,5 +8,5 @@ class Product(SQLModel, table=True):
 
     id: int = Field(primary_key=True)
     name: str
-    description: str
+    description: str = Field(sa_column=Column(TEXT))
     price: int
