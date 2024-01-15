@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from api_v1.products.shemas.product import CreateProduct
+from api_v1.products.shemas.product import CreateProduct, UpdateProduct, PartialProduct
 from models import Product
 
 
@@ -23,15 +23,18 @@ async def get_product(product_id: int, db_session: AsyncSession) -> Product | No
     return await db_session.get(Product, product_id)
 
 
-async def update_product():
-    pass
+async def update_product(
+    product: Product,
+    product_update: UpdateProduct | PartialProduct,
+    db_session: AsyncSession,
+    partial: bool = False,
+) -> Product:
+    for key, value in product_update.model_dump(exclude_unset=partial).items():
+        setattr(product, key, value)
+    await db_session.commit()
+    return product
 
 
-async def update_product_partial():
-    pass
-
-
-async def delete_product(product_id: int, db_session: AsyncSession):
-    query = select(Product).where(Product.id == product_id)
-    product = (await db_session.execute(query)).scalars().first()
+async def delete_product(product: Product, db_session: AsyncSession) -> None:
     await db_session.delete(product)
+    await db_session.commit()
