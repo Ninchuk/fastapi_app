@@ -14,7 +14,7 @@ router = APIRouter()
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/jwt/login/")
 
 
-async def get_current_token_payload(token: str = Depends(oauth2_scheme)) -> dict:
+def get_current_token_payload(token: str = Depends(oauth2_scheme)) -> dict:
     try:
         payload = token_utils.decode_jwt(token=token)
     except InvalidTokenError as e:
@@ -39,7 +39,7 @@ async def get_current_auth_user(
     return user
 
 
-async def get_current_active_auth_user(
+def get_current_active_auth_user(
     user: CreateUser = Depends(get_current_auth_user),
 ):
     if user.is_active:
@@ -83,7 +83,6 @@ async def auth_user_by_jwt(user: CreateUser = Depends(validate_user)) -> TokenIn
 
 @router.get("/user/me/")
 async def check_self_info(
-    payload: dict = Depends(get_current_token_payload),
     user: User = Depends(get_current_active_auth_user),
 ):
     return {"username": user.username, "email": user.email}
