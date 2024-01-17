@@ -1,3 +1,4 @@
+import bcrypt
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
@@ -12,7 +13,12 @@ async def create_user(user_in: CreateUser, db_session: AsyncSession) -> dict:
     existing_email = (await db_session.execute(query)).scalars().first()
     if existing_email:
         raise UserError("Email already registered")
-    user = User(**user_in.model_dump())
+    encrypted_password = bcrypt.hashpw(
+        user_in.password.encode("utf-8"), bcrypt.gensalt()
+    )
+    user = User(
+        username=user_in.username, email=user_in.email, password=encrypted_password
+    )
     db_session.add(user)
     result = {"result": "success", "user": user_in.model_dump()}
     await db_session.commit()

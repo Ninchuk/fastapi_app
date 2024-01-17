@@ -1,7 +1,18 @@
+from pathlib import Path
 from typing import List, Union
 
-from pydantic import field_validator
+from pydantic import field_validator, BaseModel
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+BASE_DIR = Path(__file__).parent.parent
+
+
+class AuthJWT(BaseModel):
+    PRIVATE_KEY_PATH: Path = BASE_DIR / "certs" / "private_key.pem"
+    PUBLIC_KEY_PATH: Path = BASE_DIR / "certs" / "public_key.pem"
+    ALGORITHM: str = "RS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 15
 
 
 class Settings(BaseSettings):
@@ -21,7 +32,8 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: List = []
 
     api_v1_prefix: str = "/api/v1"
-
+    AUTH_JWT: AuthJWT = AuthJWT()
+    PASSWORD_LEN: int = 15
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     @field_validator("BACKEND_CORS_ORIGINS")

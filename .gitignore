@@ -30,3 +30,4 @@ static/*
 .env
 !.gitkeep
 .pytest_cache
+certs/

@@ -5,7 +5,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from api_v1.products import crud
 from api_v1.products.dependencies import get_product_by_id
-from api_v1.products.shemas.product import CreateProduct, UpdateProduct, PartialProduct
+from api_v1.shemas.product import CreateProduct, UpdateProduct, PartialProduct
 from models import Product
 from webapp.deps import get_db
 

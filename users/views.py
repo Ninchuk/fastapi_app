@@ -13,11 +13,11 @@ from webapp.deps import get_db
 router = APIRouter(prefix="/users", tags=["Users"])
 
 
-@router.post("/")
+@router.post("/signup/")
 async def create_user(
     user: CreateUser,
     db_session: Annotated[AsyncSession, Depends(get_db)],
-):
+) -> dict:
     try:
         return await crud.create_user(user_in=user, db_session=db_session)
     except UserError as e:
@@ -28,7 +28,7 @@ async def create_user(
 async def get_user(
     username: str,
     db_session: Annotated[AsyncSession, Depends(get_db)],
-):
+) -> dict:
     try:
         return await crud.get_user_by_name(username=username, db_session=db_session)
     except UserError as e:

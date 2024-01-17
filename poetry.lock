@@ -730,6 +730,17 @@ files = [
 ]
 
 [[package]]
+name = "multipart"
+version = "0.2.4"
+description = "Parser for multipart/form-data."
+optional = false
+python-versions = "*"
+files = [
+    {file = "multipart-0.2.4-py3-none-any.whl", hash = "sha256:5aec990820b8a9e94f9c164fbeb58cf118cfbde2854865b67a9a730edd1fb9d1"},
+    {file = "multipart-0.2.4.tar.gz", hash = "sha256:06ba205360bc7096fefe618e4f1e9b2cdb890b4f2157053a81f386912a2522cb"},
+]
+
+[[package]]
 name = "mypy-extensions"
 version = "1.0.0"
 description = "Type system extensions for programs checked with the mypy type checker."
@@ -1599,4 +1610,4 @@ email = ["email-validator"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "d87ff37b3f06396ec1a6a0396b524d819da0658f399af48aca6347863c10f4ff"
+content-hash = "50949ce3bb74a6e2f8fdf594d728b062fd7df27bef3d61e351b4aae1bff96ae3"

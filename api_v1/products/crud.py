@@ -1,7 +1,7 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlmodel import select
 
-from api_v1.products.shemas.product import CreateProduct, UpdateProduct, PartialProduct
+from api_v1.shemas.product import CreateProduct, UpdateProduct, PartialProduct
 from models import Product
 
 
